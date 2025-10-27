@@ -40,11 +40,17 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
     }
   });
 
-  const bodyColor = hasChristmasSweater ? "#DC143C" : "#4169E1";
+  // Random clothing colors for variety
+  const tshirtColors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE"];
+  const randomTshirt = tshirtColors[Math.floor(Math.random() * tshirtColors.length)];
+  const bodyColor = hasChristmasSweater ? "#DC143C" : randomTshirt;
   const pantsColor = hasChristmasSweater ? "#2F4F4F" : "#2C3E50";
 
+  // Scale factor to make people bigger
+  const scale = 1.5;
+
   return (
-    <group ref={groupRef} position={initialPosition}>
+    <group ref={groupRef} position={initialPosition} scale={[scale, scale, scale]}>
       {/* Body */}
       <mesh position={[0, 0.7, 0]}>
         <boxGeometry args={[0.4, 0.6, 0.3]} />
@@ -75,23 +81,39 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
         <meshStandardMaterial color="#FFDAB9" />
       </mesh>
 
-      {/* Eyes */}
+      {/* Eyes with whites */}
       <mesh position={[-0.08, 1.25, 0.18]}>
-        <sphereGeometry args={[0.03, 8, 8]} />
+        <sphereGeometry args={[0.04, 8, 8]} />
+        <meshStandardMaterial color="#FFFFFF" />
+      </mesh>
+      <mesh position={[-0.08, 1.25, 0.2]}>
+        <sphereGeometry args={[0.02, 8, 8]} />
         <meshStandardMaterial color="#000000" />
       </mesh>
       <mesh position={[0.08, 1.25, 0.18]}>
-        <sphereGeometry args={[0.03, 8, 8]} />
+        <sphereGeometry args={[0.04, 8, 8]} />
+        <meshStandardMaterial color="#FFFFFF" />
+      </mesh>
+      <mesh position={[0.08, 1.25, 0.2]}>
+        <sphereGeometry args={[0.02, 8, 8]} />
         <meshStandardMaterial color="#000000" />
+      </mesh>
+
+      {/* Mouth */}
+      <mesh position={[0, 1.15, 0.19]}>
+        <boxGeometry args={[0.08, 0.02, 0.01]} />
+        <meshStandardMaterial color="#8B4513" />
       </mesh>
 
       {/* Hair */}
       {hairStyle === 'long' ? (
         <>
+          {/* Top of head */}
           <mesh position={[0, 1.35, 0]}>
             <boxGeometry args={[0.24, 0.15, 0.24]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
+          {/* Side hair */}
           <mesh position={[-0.15, 1.1, 0]}>
             <boxGeometry args={[0.1, 0.4, 0.2]} />
             <meshStandardMaterial color="#654321" />
@@ -100,12 +122,24 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
             <boxGeometry args={[0.1, 0.4, 0.2]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
+          {/* Back hair */}
+          <mesh position={[0, 1.15, -0.15]}>
+            <boxGeometry args={[0.22, 0.35, 0.12]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
         </>
       ) : (
-        <mesh position={[0, 1.35, 0]}>
-          <boxGeometry args={[0.22, 0.12, 0.22]} />
-          <meshStandardMaterial color="#654321" />
-        </mesh>
+        <>
+          {/* Top and back for short hair */}
+          <mesh position={[0, 1.35, 0]}>
+            <boxGeometry args={[0.22, 0.12, 0.22]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
+          <mesh position={[0, 1.28, -0.15]}>
+            <boxGeometry args={[0.2, 0.15, 0.08]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
+        </>
       )}
 
       {/* Arms */}

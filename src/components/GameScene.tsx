@@ -73,6 +73,30 @@ export const GameScene = () => {
       hasChristmasSweater: false,
       moveSpeed: 0.9,
       moveRange: { x: [-12, -2], z: [-15, -5] }
+    },
+    { 
+      id: 6, 
+      position: [2, 0, 12], 
+      hairStyle: 'short', 
+      hasChristmasSweater: false,
+      moveSpeed: 0.7,
+      moveRange: { x: [-2, 6], z: [8, 16] }
+    },
+    { 
+      id: 7, 
+      position: [-12, 0, 8], 
+      hairStyle: 'long', 
+      hasChristmasSweater: false,
+      moveSpeed: 1.1,
+      moveRange: { x: [-16, -8], z: [4, 12] }
+    },
+    { 
+      id: 8, 
+      position: [8, 0, -12], 
+      hairStyle: 'short', 
+      hasChristmasSweater: false,
+      moveSpeed: 0.85,
+      moveRange: { x: [4, 12], z: [-16, -8] }
     }
   ];
 
