@@ -51,26 +51,11 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
 
   return (
     <group ref={groupRef} position={initialPosition} scale={[scale, scale, scale]}>
-      {/* T-shirt with pattern */}
+      {/* T-shirt */}
       <mesh position={[0, 0.7, 0]}>
         <boxGeometry args={[0.4, 0.6, 0.3]} />
         <meshStandardMaterial color={bodyColor} />
       </mesh>
-      
-      {/* T-shirt pattern - dots or stripes */}
-      {!hasChristmasSweater && Array.from({ length: 6 }).map((_, i) => (
-        <mesh 
-          key={i}
-          position={[
-            (i % 2 - 0.5) * 0.15,
-            0.7 + Math.floor(i / 2) * 0.15 - 0.15,
-            0.16
-          ]}
-        >
-          <sphereGeometry args={[0.025, 8, 8]} />
-          <meshStandardMaterial color="#ffffff" />
-        </mesh>
-      ))}
 
       {/* Christmas Sweater Decoration */}
       {hasChristmasSweater && (
@@ -120,47 +105,52 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
         <meshStandardMaterial color="#8B4513" />
       </mesh>
 
-      {/* Hair - complete coverage without gaps */}
+      {/* Hair - softer rounded style */}
       {hairStyle === 'long' ? (
         <>
-          {/* Top of head */}
-          <mesh position={[0, 1.35, 0]}>
-            <boxGeometry args={[0.26, 0.16, 0.26]} />
+          {/* Top of head - rounded */}
+          <mesh position={[0, 1.38, 0]}>
+            <sphereGeometry args={[0.18, 12, 12]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Side hair - wider to close gaps */}
-          <mesh position={[-0.16, 1.1, 0]}>
-            <boxGeometry args={[0.12, 0.45, 0.24]} />
+          {/* Side hair - softer */}
+          <mesh position={[-0.15, 1.15, 0]}>
+            <sphereGeometry args={[0.12, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          <mesh position={[0.16, 1.1, 0]}>
-            <boxGeometry args={[0.12, 0.45, 0.24]} />
+          <mesh position={[0.15, 1.15, 0]}>
+            <sphereGeometry args={[0.12, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Back hair - fuller */}
-          <mesh position={[0, 1.15, -0.16]}>
-            <boxGeometry args={[0.26, 0.4, 0.14]} />
+          {/* Lower side hair */}
+          <mesh position={[-0.15, 0.95, 0]}>
+            <sphereGeometry args={[0.1, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Fill corner gaps */}
-          <mesh position={[-0.13, 1.25, -0.13]}>
-            <boxGeometry args={[0.08, 0.2, 0.08]} />
+          <mesh position={[0.15, 0.95, 0]}>
+            <sphereGeometry args={[0.1, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          <mesh position={[0.13, 1.25, -0.13]}>
-            <boxGeometry args={[0.08, 0.2, 0.08]} />
+          {/* Back hair - rounded */}
+          <mesh position={[0, 1.2, -0.15]}>
+            <sphereGeometry args={[0.15, 10, 10]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
+          <mesh position={[0, 1.0, -0.15]}>
+            <sphereGeometry args={[0.13, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
         </>
       ) : (
         <>
-          {/* Top and back for short hair */}
-          <mesh position={[0, 1.35, 0]}>
-            <boxGeometry args={[0.24, 0.14, 0.24]} />
+          {/* Top for short hair - rounded */}
+          <mesh position={[0, 1.38, 0]}>
+            <sphereGeometry args={[0.16, 12, 12]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          <mesh position={[0, 1.28, -0.15]}>
-            <boxGeometry args={[0.22, 0.16, 0.1]} />
+          {/* Back short hair */}
+          <mesh position={[0, 1.28, -0.12]}>
+            <sphereGeometry args={[0.12, 10, 10]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
         </>
