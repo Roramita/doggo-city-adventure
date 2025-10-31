@@ -32,7 +32,7 @@ const Door = ({ position }: { position: [number, number, number] }) => (
   </group>
 );
 
-// Helper component for balcony
+// Helper component for balcony with more greenery
 const Balcony = ({ position }: { position: [number, number, number] }) => (
   <group position={position}>
     {/* Balcony floor */}
@@ -40,28 +40,85 @@ const Balcony = ({ position }: { position: [number, number, number] }) => (
       <boxGeometry args={[2, 0.1, 1.5]} />
       <meshStandardMaterial color="#888888" />
     </mesh>
-    {/* Balcony railing */}
+    {/* Balcony railing with design */}
     <mesh position={[0, 0.5, 1.4]}>
-      <boxGeometry args={[2, 1, 0.05]} />
-      <meshStandardMaterial color="#666666" />
+      <boxGeometry args={[2, 1, 0.08]} />
+      <meshStandardMaterial color="#ffffff" />
     </mesh>
-    {/* Flower pots */}
+    {/* Railing bars */}
+    {Array.from({ length: 8 }).map((_, i) => (
+      <mesh key={i} position={[-0.875 + i * 0.25, 0.5, 1.37]}>
+        <boxGeometry args={[0.03, 0.9, 0.03]} />
+        <meshStandardMaterial color="#ffffff" />
+      </mesh>
+    ))}
+    {/* Multiple flower pots with plants */}
     <mesh position={[-0.7, 0.2, 1.3]}>
-      <cylinderGeometry args={[0.15, 0.15, 0.3, 8]} />
+      <cylinderGeometry args={[0.18, 0.15, 0.35, 8]} />
       <meshStandardMaterial color="#d2691e" />
     </mesh>
-    <mesh position={[-0.7, 0.45, 1.3]}>
-      <sphereGeometry args={[0.2, 8, 8]} />
+    <mesh position={[-0.7, 0.5, 1.3]}>
+      <sphereGeometry args={[0.25, 8, 8]} />
       <meshStandardMaterial color="#ff69b4" />
     </mesh>
-    <mesh position={[0.7, 0.2, 1.3]}>
-      <cylinderGeometry args={[0.15, 0.15, 0.3, 8]} />
+    {/* Leaves around flowers */}
+    {Array.from({ length: 4 }).map((_, i) => (
+      <mesh 
+        key={i}
+        position={[
+          -0.7 + Math.cos(i * Math.PI / 2) * 0.2,
+          0.4,
+          1.3 + Math.sin(i * Math.PI / 2) * 0.2
+        ]}
+      >
+        <boxGeometry args={[0.08, 0.12, 0.02]} />
+        <meshStandardMaterial color="#2d5016" />
+      </mesh>
+    ))}
+    
+    <mesh position={[0, 0.2, 1.3]}>
+      <cylinderGeometry args={[0.18, 0.15, 0.35, 8]} />
       <meshStandardMaterial color="#d2691e" />
     </mesh>
-    <mesh position={[0.7, 0.45, 1.3]}>
-      <sphereGeometry args={[0.2, 8, 8]} />
+    <mesh position={[0, 0.5, 1.3]}>
+      <sphereGeometry args={[0.25, 8, 8]} />
       <meshStandardMaterial color="#ff1493" />
     </mesh>
+    {Array.from({ length: 4 }).map((_, i) => (
+      <mesh 
+        key={i}
+        position={[
+          Math.cos(i * Math.PI / 2) * 0.2,
+          0.4,
+          1.3 + Math.sin(i * Math.PI / 2) * 0.2
+        ]}
+      >
+        <boxGeometry args={[0.08, 0.12, 0.02]} />
+        <meshStandardMaterial color="#2d5016" />
+      </mesh>
+    ))}
+    
+    <mesh position={[0.7, 0.2, 1.3]}>
+      <cylinderGeometry args={[0.18, 0.15, 0.35, 8]} />
+      <meshStandardMaterial color="#d2691e" />
+    </mesh>
+    <mesh position={[0.7, 0.5, 1.3]}>
+      <sphereGeometry args={[0.25, 8, 8]} />
+      <meshStandardMaterial color="#ffa500" />
+    </mesh>
+    {Array.from({ length: 4 }).map((_, i) => (
+      <mesh 
+        key={i}
+        position={[
+          0.7 + Math.cos(i * Math.PI / 2) * 0.2,
+          0.4,
+          1.3 + Math.sin(i * Math.PI / 2) * 0.2
+        ]}
+      >
+        <boxGeometry args={[0.08, 0.12, 0.02]} />
+        <meshStandardMaterial color="#2d5016" />
+      </mesh>
+    ))}
   </group>
 );
 
@@ -92,15 +149,15 @@ export const City = () => {
         </mesh>
       ))}
 
-      {/* Manhole covers */}
-      {[[-15, 5], [10, -8], [-5, 15]].map((pos, i) => (
+      {/* Manhole covers - flat on street only */}
+      {[[-2, 5], [1, -8], [-1, 15]].map((pos, i) => (
         <mesh
           key={i}
           rotation={[-Math.PI / 2, 0, 0]}
-          position={[pos[0], 0.02, pos[1]]}
+          position={[pos[0], 0.005, pos[1]]}
           receiveShadow
         >
-          <cylinderGeometry args={[0.6, 0.6, 0.1, 16]} />
+          <circleGeometry args={[0.6, 16]} />
           <meshStandardMaterial color="#555555" />
         </mesh>
       ))}
@@ -113,11 +170,21 @@ export const City = () => {
         </mesh>
         {/* Door */}
         <Door position={[0, 1, 2.55]} />
-        {/* Windows - multiple floors */}
+        {/* Windows on all sides - multiple floors */}
         {Array.from({ length: 4 }).map((_, floor) => (
           <group key={floor}>
+            {/* Front windows */}
             <Window position={[-1.5, 3 + floor * 2.5, 2.55]} />
             <Window position={[1.5, 3 + floor * 2.5, 2.55]} />
+            {/* Back windows */}
+            <Window position={[-1.5, 3 + floor * 2.5, -2.55]} />
+            <Window position={[1.5, 3 + floor * 2.5, -2.55]} />
+            {/* Left side windows */}
+            <Window position={[-2.55, 3 + floor * 2.5, -1]} />
+            <Window position={[-2.55, 3 + floor * 2.5, 1]} />
+            {/* Right side windows */}
+            <Window position={[2.55, 3 + floor * 2.5, -1]} />
+            <Window position={[2.55, 3 + floor * 2.5, 1]} />
             {floor > 0 && <Balcony position={[0, 2.5 + floor * 2.5, 2]} />}
           </group>
         ))}
@@ -132,8 +199,13 @@ export const City = () => {
         <Door position={[0, 1, 2.05]} />
         {Array.from({ length: 3 }).map((_, floor) => (
           <group key={floor}>
+            {/* All sides windows */}
             <Window position={[-1, 2.5 + floor * 2.2, 2.05]} />
             <Window position={[1, 2.5 + floor * 2.2, 2.05]} />
+            <Window position={[-1, 2.5 + floor * 2.2, -2.05]} />
+            <Window position={[1, 2.5 + floor * 2.2, -2.05]} />
+            <Window position={[-2.05, 2.5 + floor * 2.2, 0]} />
+            <Window position={[2.05, 2.5 + floor * 2.2, 0]} />
             {floor > 0 && <Balcony position={[0, 2 + floor * 2.2, 1.5]} />}
           </group>
         ))}
@@ -148,9 +220,19 @@ export const City = () => {
         <Door position={[0, 1, 3.05]} />
         {Array.from({ length: 6 }).map((_, floor) => (
           <group key={floor}>
+            {/* Front windows */}
             <Window position={[-2, 3 + floor * 2.3, 3.05]} />
             <Window position={[0, 3 + floor * 2.3, 3.05]} />
             <Window position={[2, 3 + floor * 2.3, 3.05]} />
+            {/* Back windows */}
+            <Window position={[-2, 3 + floor * 2.3, -3.05]} />
+            <Window position={[0, 3 + floor * 2.3, -3.05]} />
+            <Window position={[2, 3 + floor * 2.3, -3.05]} />
+            {/* Side windows */}
+            <Window position={[-3.05, 3 + floor * 2.3, -1.5]} />
+            <Window position={[-3.05, 3 + floor * 2.3, 1.5]} />
+            <Window position={[3.05, 3 + floor * 2.3, -1.5]} />
+            <Window position={[3.05, 3 + floor * 2.3, 1.5]} />
             {floor > 0 && floor % 2 === 0 && <Balcony position={[0, 2.5 + floor * 2.3, 2.5]} />}
           </group>
         ))}
@@ -237,14 +319,11 @@ export const City = () => {
         <meshStandardMaterial color="#66aa66" />
       </mesh>
 
-      {/* More trees */}
+      {/* More trees - expanded */}
       {[
-        [12, -8],
-        [18, -12],
-        [15, -7],
-        [19, -10],
-        [13, -13],
-        [17, -8]
+        [12, -8], [18, -12], [15, -7], [19, -10], [13, -13], [17, -8],
+        [-15, -8], [-18, -5], [-20, 10], [-22, 5], [20, 8], [22, 12],
+        [-8, 18], [8, 20], [10, 22], [-10, 20]
       ].map((pos, i) => (
         <group key={i} position={[pos[0], 0, pos[1]]}>
           <mesh position={[0, 1.2, 0]} castShadow>
@@ -292,6 +371,76 @@ export const City = () => {
         </mesh>
       </group>
 
+      {/* School - large building */}
+      <group position={[-15, 0, -18]}>
+        <mesh position={[0, 3, 0]} castShadow receiveShadow>
+          <boxGeometry args={[12, 6, 8]} />
+          <meshStandardMaterial color="#ffd700" />
+        </mesh>
+        <Door position={[0, 1, 4.05]} />
+        {/* School windows */}
+        {Array.from({ length: 2 }).map((_, floor) => (
+          <group key={floor}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Window key={i} position={[-4.5 + i * 2.25, 1.5 + floor * 2.5, 4.05]} />
+            ))}
+          </group>
+        ))}
+        {/* School sign */}
+        <mesh position={[0, 5, 4.1]} castShadow>
+          <boxGeometry args={[3, 0.8, 0.1]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+      </group>
+
+      {/* Playground with sandbox */}
+      <group position={[-8, 0, -18]}>
+        {/* Sandbox */}
+        <mesh position={[0, 0.1, 0]} receiveShadow>
+          <boxGeometry args={[4, 0.2, 4]} />
+          <meshStandardMaterial color="#f4a460" />
+        </mesh>
+        {/* Sandbox border */}
+        <mesh position={[0, 0.2, -2]} castShadow>
+          <boxGeometry args={[4, 0.3, 0.2]} />
+          <meshStandardMaterial color="#8b4513" />
+        </mesh>
+        <mesh position={[0, 0.2, 2]} castShadow>
+          <boxGeometry args={[4, 0.3, 0.2]} />
+          <meshStandardMaterial color="#8b4513" />
+        </mesh>
+        <mesh position={[-2, 0.2, 0]} castShadow>
+          <boxGeometry args={[0.2, 0.3, 4]} />
+          <meshStandardMaterial color="#8b4513" />
+        </mesh>
+        <mesh position={[2, 0.2, 0]} castShadow>
+          <boxGeometry args={[0.2, 0.3, 4]} />
+          <meshStandardMaterial color="#8b4513" />
+        </mesh>
+        {/* Slide */}
+        <mesh position={[5, 1, 0]} castShadow>
+          <boxGeometry args={[0.1, 2, 1.5]} />
+          <meshStandardMaterial color="#ff0000" />
+        </mesh>
+        <mesh position={[5, 0.5, 0]} rotation={[0, 0, -Math.PI / 6]} castShadow>
+          <boxGeometry args={[2, 0.1, 1.5]} />
+          <meshStandardMaterial color="#ff0000" />
+        </mesh>
+        {/* Swing */}
+        <mesh position={[-5, 2, 0]} castShadow>
+          <boxGeometry args={[3, 0.2, 0.2]} />
+          <meshStandardMaterial color="#8b4513" />
+        </mesh>
+        <mesh position={[-5.8, 1, 0]} castShadow>
+          <cylinderGeometry args={[0.05, 0.05, 2, 8]} />
+          <meshStandardMaterial color="#333333" />
+        </mesh>
+        <mesh position={[-5.8, 0.3, 0]} castShadow>
+          <boxGeometry args={[0.5, 0.05, 0.8]} />
+          <meshStandardMaterial color="#ff6600" />
+        </mesh>
+      </group>
+
       {/* Café */}
       <group position={[-15, 0, 12]}>
         <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
@@ -329,6 +478,23 @@ export const City = () => {
             ))}
           </group>
         ))}
+      </group>
+
+      {/* Shopping center */}
+      <group position={[18, 0, 8]}>
+        <mesh position={[0, 2.5, 0]} castShadow receiveShadow>
+          <boxGeometry args={[8, 5, 6]} />
+          <meshStandardMaterial color="#87ceeb" />
+        </mesh>
+        <Door position={[0, 1, 3.05]} />
+        {/* Large shopping windows */}
+        <Window position={[-2.5, 2, 3.05]} />
+        <Window position={[2.5, 2, 3.05]} />
+        {/* Sign */}
+        <mesh position={[0, 4.5, 3.1]} castShadow>
+          <boxGeometry args={[4, 0.6, 0.1]} />
+          <meshStandardMaterial color="#ff6600" />
+        </mesh>
       </group>
     </group>
   );

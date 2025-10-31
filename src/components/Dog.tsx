@@ -26,12 +26,20 @@ export const Dog = ({ position, rotation, isMoving }: DogProps) => {
       leftEarRef.current.position.y = 0.55 + bounce;
       rightEarRef.current.position.y = 0.55 + bounce;
     }
+    
+    // Smooth rotation transition
+    if (groupRef.current) {
+      const targetRotation = rotation;
+      const currentRotation = groupRef.current.rotation.y;
+      const diff = targetRotation - currentRotation;
+      const shortestDiff = ((diff + Math.PI) % (Math.PI * 2)) - Math.PI;
+      groupRef.current.rotation.y += shortestDiff * 0.15;
+    }
   });
 
   useEffect(() => {
     if (groupRef.current) {
       groupRef.current.position.set(...position);
-      groupRef.current.rotation.y = rotation;
     }
   }, [position, rotation]);
 

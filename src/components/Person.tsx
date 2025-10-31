@@ -51,11 +51,26 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
 
   return (
     <group ref={groupRef} position={initialPosition} scale={[scale, scale, scale]}>
-      {/* Body */}
+      {/* T-shirt with pattern */}
       <mesh position={[0, 0.7, 0]}>
         <boxGeometry args={[0.4, 0.6, 0.3]} />
         <meshStandardMaterial color={bodyColor} />
       </mesh>
+      
+      {/* T-shirt pattern - dots or stripes */}
+      {!hasChristmasSweater && Array.from({ length: 6 }).map((_, i) => (
+        <mesh 
+          key={i}
+          position={[
+            (i % 2 - 0.5) * 0.15,
+            0.7 + Math.floor(i / 2) * 0.15 - 0.15,
+            0.16
+          ]}
+        >
+          <sphereGeometry args={[0.025, 8, 8]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+      ))}
 
       {/* Christmas Sweater Decoration */}
       {hasChristmasSweater && (
@@ -105,26 +120,35 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
         <meshStandardMaterial color="#8B4513" />
       </mesh>
 
-      {/* Hair */}
+      {/* Hair - complete coverage without gaps */}
       {hairStyle === 'long' ? (
         <>
           {/* Top of head */}
           <mesh position={[0, 1.35, 0]}>
-            <boxGeometry args={[0.24, 0.15, 0.24]} />
+            <boxGeometry args={[0.26, 0.16, 0.26]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Side hair */}
-          <mesh position={[-0.15, 1.1, 0]}>
-            <boxGeometry args={[0.1, 0.4, 0.2]} />
+          {/* Side hair - wider to close gaps */}
+          <mesh position={[-0.16, 1.1, 0]}>
+            <boxGeometry args={[0.12, 0.45, 0.24]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          <mesh position={[0.15, 1.1, 0]}>
-            <boxGeometry args={[0.1, 0.4, 0.2]} />
+          <mesh position={[0.16, 1.1, 0]}>
+            <boxGeometry args={[0.12, 0.45, 0.24]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Back hair */}
-          <mesh position={[0, 1.15, -0.15]}>
-            <boxGeometry args={[0.22, 0.35, 0.12]} />
+          {/* Back hair - fuller */}
+          <mesh position={[0, 1.15, -0.16]}>
+            <boxGeometry args={[0.26, 0.4, 0.14]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
+          {/* Fill corner gaps */}
+          <mesh position={[-0.13, 1.25, -0.13]}>
+            <boxGeometry args={[0.08, 0.2, 0.08]} />
+            <meshStandardMaterial color="#654321" />
+          </mesh>
+          <mesh position={[0.13, 1.25, -0.13]}>
+            <boxGeometry args={[0.08, 0.2, 0.08]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
         </>
@@ -132,11 +156,11 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
         <>
           {/* Top and back for short hair */}
           <mesh position={[0, 1.35, 0]}>
-            <boxGeometry args={[0.22, 0.12, 0.22]} />
+            <boxGeometry args={[0.24, 0.14, 0.24]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
           <mesh position={[0, 1.28, -0.15]}>
-            <boxGeometry args={[0.2, 0.15, 0.08]} />
+            <boxGeometry args={[0.22, 0.16, 0.1]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
         </>
