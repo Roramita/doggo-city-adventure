@@ -18,21 +18,29 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
     (Math.random() - 0.5) * 2
   ).normalize());
   const currentPos = useRef(new THREE.Vector3(...initialPosition));
+  
+  // Static clothing colors that don't change
+  const tshirtColors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE"];
+  const staticColors = useRef({
+    tshirt: tshirtColors[Math.floor(Math.random() * tshirtColors.length)],
+    pants: "#2C3E50"
+  });
 
   useFrame((state, delta) => {
     if (groupRef.current) {
       const movement = direction.current.clone().multiplyScalar(moveSpeed * delta);
       currentPos.current.add(movement);
 
-      // Building collision detection
+      // Building collision detection - more accurate boundaries
       const buildings = [
-        { x: -15, z: -5, width: 5, depth: 5 },
-        { x: 15, z: 10, width: 4, depth: 4 },
-        { x: -15, z: 15, width: 6, depth: 6 },
-        { x: 10, z: 15, width: 5, depth: 4 },
-        { x: -8, z: -12, width: 12, depth: 8 },
-        { x: 18, z: -8, width: 4, depth: 3 },
-        { x: 18, z: -18, width: 8, depth: 6 }
+        { x: -15, z: -5, width: 6, depth: 6 },  // Building 1
+        { x: 15, z: 10, width: 5, depth: 5 },   // Building 2
+        { x: -15, z: 15, width: 7, depth: 7 },  // Building 3
+        { x: 10, z: 15, width: 6, depth: 5 },   // Shop
+        { x: -10, z: -12, width: 13, depth: 9 }, // School
+        { x: 18, z: -8, width: 5, depth: 4 },   // Café
+        { x: 18, z: -18, width: 9, depth: 7 },  // Shopping center
+        { x: -18, z: 8, width: 5, depth: 5 }    // Swimming pool
       ];
       
       let validPosition = true;
@@ -63,11 +71,9 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
     }
   });
 
-  // Random clothing colors for variety
-  const tshirtColors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE"];
-  const randomTshirt = tshirtColors[Math.floor(Math.random() * tshirtColors.length)];
-  const bodyColor = hasChristmasSweater ? "#DC143C" : randomTshirt;
-  const pantsColor = hasChristmasSweater ? "#2F4F4F" : "#2C3E50";
+  // Use static colors that don't change
+  const bodyColor = hasChristmasSweater ? "#DC143C" : staticColors.current.tshirt;
+  const pantsColor = hasChristmasSweater ? "#2F4F4F" : staticColors.current.pants;
 
   // Scale factor to make people bigger
   const scale = 1.5;

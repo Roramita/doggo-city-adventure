@@ -178,16 +178,140 @@ export const City = () => {
             {/* Right side windows */}
             <Window position={[2.5, 3 + floor * 2.5, -1]} rotation={[0, -Math.PI / 2, 0]} />
             <Window position={[2.5, 3 + floor * 2.5, 1]} rotation={[0, -Math.PI / 2, 0]} />
-            {floor > 0 && <Balcony position={[0, 2.5 + floor * 2.5, 2]} />}
+            {floor > 0 && floor === 1 && <Balcony position={[0, 2.5 + floor * 2.5, 2]} />}
+            {floor > 0 && floor === 2 && (
+              <group position={[0, 2.5 + floor * 2.5, 2]}>
+                <mesh position={[0, 0, 0.8]}>
+                  <boxGeometry args={[2.2, 0.15, 1.5]} />
+                  <meshStandardMaterial color="#888888" />
+                </mesh>
+                <mesh position={[0, 0.5, 1.4]}>
+                  <boxGeometry args={[2.2, 0.08, 0.08]} />
+                  <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                <mesh position={[0, 0.9, 1.4]}>
+                  <boxGeometry args={[2.2, 0.08, 0.08]} />
+                  <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                {Array.from({ length: 11 }).map((_, i) => (
+                  <mesh key={i} position={[-1.05 + i * 0.21, 0.7, 1.4]}>
+                    <boxGeometry args={[0.03, 0.4, 0.03]} />
+                    <meshStandardMaterial color="#ffffff" />
+                  </mesh>
+                ))}
+                {[[-0.6, 0.3], [0.2, 0.4]].map((xPos, idx) => (
+                  <group key={idx}>
+                    <mesh position={[xPos[0], 0.3, 1.25]}>
+                      <boxGeometry args={[0.4, 0.25, 0.2]} />
+                      <meshStandardMaterial color="#8b4513" />
+                    </mesh>
+                    <mesh position={[xPos[0], 0.42, 1.25]}>
+                      <boxGeometry args={[0.38, 0.05, 0.18]} />
+                      <meshStandardMaterial color="#654321" />
+                    </mesh>
+                    <mesh position={[xPos[0] - 0.1, 0.55 + xPos[1] * 0.1, 1.25]}>
+                      <sphereGeometry args={[0.08, 8, 8]} />
+                      <meshStandardMaterial color="#ff69b4" />
+                    </mesh>
+                    <mesh position={[xPos[0] + 0.1, 0.58 + xPos[1] * 0.15, 1.25]}>
+                      <sphereGeometry args={[0.09, 8, 8]} />
+                      <meshStandardMaterial color="#9370db" />
+                    </mesh>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <mesh 
+                        key={i}
+                        position={[
+                          xPos[0] + (Math.random() - 0.5) * 0.3,
+                          0.45 + Math.random() * 0.2,
+                          1.25 + (Math.random() - 0.5) * 0.12
+                        ]}
+                      >
+                        <boxGeometry args={[0.07, 0.1, 0.02]} />
+                        <meshStandardMaterial color="#32cd32" />
+                      </mesh>
+                    ))}
+                  </group>
+                ))}
+              </group>
+            )}
+            {floor > 0 && floor === 3 && (
+              <group position={[0, 2.5 + floor * 2.5, 2]}>
+                <mesh position={[0, 0, 0.8]}>
+                  <boxGeometry args={[2.2, 0.15, 1.5]} />
+                  <meshStandardMaterial color="#888888" />
+                </mesh>
+                <mesh position={[0, 0.5, 1.4]}>
+                  <boxGeometry args={[2.2, 0.08, 0.08]} />
+                  <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                <mesh position={[0, 0.9, 1.4]}>
+                  <boxGeometry args={[2.2, 0.08, 0.08]} />
+                  <meshStandardMaterial color="#ffffff" />
+                </mesh>
+                {Array.from({ length: 11 }).map((_, i) => (
+                  <mesh key={i} position={[-1.05 + i * 0.21, 0.7, 1.4]}>
+                    <boxGeometry args={[0.03, 0.4, 0.03]} />
+                    <meshStandardMaterial color="#ffffff" />
+                  </mesh>
+                ))}
+                {[[-0.9, 0.2], [0.5, 0.35]].map((xPos, idx) => (
+                  <group key={idx}>
+                    <mesh position={[xPos[0], 0.35, 1.25]}>
+                      <boxGeometry args={[0.55, 0.35, 0.25]} />
+                      <meshStandardMaterial color="#a0522d" />
+                    </mesh>
+                    <mesh position={[xPos[0], 0.5, 1.25]}>
+                      <boxGeometry args={[0.52, 0.05, 0.23]} />
+                      <meshStandardMaterial color="#654321" />
+                    </mesh>
+                    <mesh position={[xPos[0], 0.7 + xPos[1] * 0.15, 1.25]}>
+                      <sphereGeometry args={[0.12, 8, 8]} />
+                      <meshStandardMaterial color="#ff4500" />
+                    </mesh>
+                    <mesh position={[xPos[0] - 0.15, 0.68 + xPos[1] * 0.1, 1.25]}>
+                      <sphereGeometry args={[0.1, 8, 8]} />
+                      <meshStandardMaterial color="#ffd700" />
+                    </mesh>
+                    <mesh position={[xPos[0] + 0.15, 0.65 + xPos[1] * 0.12, 1.25]}>
+                      <sphereGeometry args={[0.08, 8, 8]} />
+                      <meshStandardMaterial color="#ff1493" />
+                    </mesh>
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <mesh 
+                        key={i}
+                        position={[
+                          xPos[0] + (Math.random() - 0.5) * 0.4,
+                          0.52 + Math.random() * 0.25,
+                          1.25 + (Math.random() - 0.5) * 0.15
+                        ]}
+                        rotation={[
+                          (Math.random() - 0.5) * 0.6,
+                          (Math.random() - 0.5) * 0.6,
+                          (Math.random() - 0.5) * 0.6
+                        ]}
+                      >
+                        <boxGeometry args={[0.09, 0.13, 0.02]} />
+                        <meshStandardMaterial color="#228b22" />
+                      </mesh>
+                    ))}
+                  </group>
+                ))}
+              </group>
+            )}
           </group>
         ))}
       </group>
 
-      {/* Building 2 - Medium building */}
+      {/* Building 2 - White house with red roof */}
       <group position={[15, 0, 10]}>
         <mesh position={[0, 4, 0]} castShadow receiveShadow>
           <boxGeometry args={[4, 8, 4]} />
-          <meshStandardMaterial color="#bbbbbb" />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* Red roof */}
+        <mesh position={[0, 8.5, 0]} rotation={[0, Math.PI / 4, 0]} castShadow>
+          <coneGeometry args={[3, 1.5, 4]} />
+          <meshStandardMaterial color="#dc143c" />
         </mesh>
         <Door position={[0, 1, 2]} />
         {Array.from({ length: 3 }).map((_, floor) => (
@@ -374,34 +498,96 @@ export const City = () => {
           <meshStandardMaterial color="#ffd700" />
         </mesh>
         <Door position={[0, 1, 4]} />
-        {/* School sign above door with "SCHULE" text */}
-        <mesh position={[0, 3.5, 4.06]} castShadow>
-          <boxGeometry args={[4, 0.8, 0.08]} />
+        {/* School sign above door */}
+        <mesh position={[0, 3.8, 4.06]} castShadow>
+          <boxGeometry args={[5, 0.6, 0.08]} />
           <meshStandardMaterial color="#ffffff" />
         </mesh>
-        {/* "SCHULE" letters */}
-        <mesh position={[-1.5, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        {/* "SCHULE" letters using primitive shapes */}
+        {/* S */}
+        <mesh position={[-1.8, 3.9, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
-        <mesh position={[-0.9, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        <mesh position={[-1.93, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.12, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
-        <mesh position={[-0.3, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        <mesh position={[-1.8, 3.75, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
-        <mesh position={[0.3, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        <mesh position={[-1.67, 3.7, 4.1]}>
+          <boxGeometry args={[0.08, 0.12, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
-        <mesh position={[0.9, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        <mesh position={[-1.8, 3.65, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
-        <mesh position={[1.5, 3.5, 4.1]} castShadow>
-          <boxGeometry args={[0.3, 0.5, 0.05]} />
+        {/* C */}
+        <mesh position={[-1.2, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[-1.05, 3.9, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[-1.05, 3.65, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        {/* H */}
+        <mesh position={[-0.6, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[-0.35, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[-0.475, 3.8, 4.1]}>
+          <boxGeometry args={[0.17, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        {/* U */}
+        <mesh position={[0, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[0.25, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[0.125, 3.65, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        {/* L */}
+        <mesh position={[0.65, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[0.775, 3.65, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        {/* E */}
+        <mesh position={[1.25, 3.8, 4.1]}>
+          <boxGeometry args={[0.08, 0.35, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[1.375, 3.9, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[1.375, 3.8, 4.1]}>
+          <boxGeometry args={[0.2, 0.08, 0.04]} />
+          <meshStandardMaterial color="#000000" />
+        </mesh>
+        <mesh position={[1.375, 3.65, 4.1]}>
+          <boxGeometry args={[0.25, 0.08, 0.04]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
         {/* School windows - all sides */}
@@ -427,6 +613,177 @@ export const City = () => {
         ))}
       </group>
 
+      {/* Swimming pool */}
+      <group position={[-18, 0, 8]}>
+        <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
+          <boxGeometry args={[4, 3, 4]} />
+          <meshStandardMaterial color="#87ceeb" />
+        </mesh>
+        <Door position={[0, 1, 2]} />
+        {/* Pool sign */}
+        <mesh position={[0, 2.8, 2.06]} castShadow>
+          <boxGeometry args={[3.5, 0.5, 0.08]} />
+          <meshStandardMaterial color="#dc143c" />
+        </mesh>
+        {/* "SCHWIMMBAD" letters */}
+        {/* S */}
+        <mesh position={[-1.5, 2.9, 2.1]}>
+          <boxGeometry args={[0.15, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.575, 2.85, 2.1]}>
+          <boxGeometry args={[0.05, 0.08, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.5, 2.82, 2.1]}>
+          <boxGeometry args={[0.15, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.425, 2.78, 2.1]}>
+          <boxGeometry args={[0.05, 0.08, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.5, 2.75, 2.1]}>
+          <boxGeometry args={[0.15, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* C */}
+        <mesh position={[-1.15, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.05, 2.9, 2.1]}>
+          <boxGeometry args={[0.15, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-1.05, 2.75, 2.1]}>
+          <boxGeometry args={[0.15, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* H */}
+        <mesh position={[-0.75, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-0.6, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-0.675, 2.825, 2.1]}>
+          <boxGeometry args={[0.1, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* W */}
+        <mesh position={[-0.35, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-0.25, 2.75, 2.1]}>
+          <boxGeometry args={[0.05, 0.1, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-0.15, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* I */}
+        <mesh position={[0, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* M */}
+        <mesh position={[0.2, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[0.3, 2.88, 2.1]}>
+          <boxGeometry args={[0.05, 0.08, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[0.4, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* M */}
+        <mesh position={[0.6, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[0.7, 2.88, 2.1]}>
+          <boxGeometry args={[0.05, 0.08, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[0.8, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* B */}
+        <mesh position={[1, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.1, 2.875, 2.1]}>
+          <boxGeometry args={[0.12, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.1, 2.825, 2.1]}>
+          <boxGeometry args={[0.12, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.1, 2.775, 2.1]}>
+          <boxGeometry args={[0.12, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.16, 2.85, 2.1]}>
+          <boxGeometry args={[0.05, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.16, 2.8, 2.1]}>
+          <boxGeometry args={[0.05, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* A */}
+        <mesh position={[1.4, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.5, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.45, 2.9, 2.1]}>
+          <boxGeometry args={[0.1, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.45, 2.825, 2.1]}>
+          <boxGeometry args={[0.1, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* D */}
+        <mesh position={[1.7, 2.825, 2.1]}>
+          <boxGeometry args={[0.05, 0.2, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.8, 2.825, 2.1]}>
+          <boxGeometry args={[0.1, 0.15, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.825, 2.9, 2.1]}>
+          <boxGeometry args={[0.05, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[1.825, 2.75, 2.1]}>
+          <boxGeometry args={[0.05, 0.05, 0.04]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        
+        {/* Pool windows */}
+        <Window position={[-1, 1.8, 2]} />
+        <Window position={[1, 1.8, 2]} />
+        {/* Side windows */}
+        <Window position={[-2, 1.8, 0]} rotation={[0, Math.PI / 2, 0]} />
+        <Window position={[2, 1.8, 0]} rotation={[0, -Math.PI / 2, 0]} />
+      </group>
 
       {/* Café */}
       <group position={[18, 0, -8]}>
