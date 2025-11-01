@@ -24,6 +24,29 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
       const movement = direction.current.clone().multiplyScalar(moveSpeed * delta);
       currentPos.current.add(movement);
 
+      // Building collision detection
+      const buildings = [
+        { x: -15, z: -5, width: 5, depth: 5 },
+        { x: 15, z: 10, width: 4, depth: 4 },
+        { x: -15, z: 15, width: 6, depth: 6 },
+        { x: 10, z: 15, width: 5, depth: 4 },
+        { x: -8, z: -12, width: 12, depth: 8 },
+        { x: 18, z: -8, width: 4, depth: 3 },
+        { x: 18, z: -18, width: 8, depth: 6 }
+      ];
+      
+      let validPosition = true;
+      for (const building of buildings) {
+        const dx = Math.abs(currentPos.current.x - building.x);
+        const dz = Math.abs(currentPos.current.z - building.z);
+        if (dx < building.width / 2 + 1 && dz < building.depth / 2 + 1) {
+          validPosition = false;
+          direction.current.negate();
+          currentPos.current.sub(movement);
+          break;
+        }
+      }
+
       if (currentPos.current.x < moveRange.x[0] || currentPos.current.x > moveRange.x[1]) {
         direction.current.x *= -1;
         currentPos.current.x = THREE.MathUtils.clamp(currentPos.current.x, moveRange.x[0], moveRange.x[1]);
@@ -105,53 +128,37 @@ export const Person = ({ position: initialPosition, hairStyle, hasChristmasSweat
         <meshStandardMaterial color="#8B4513" />
       </mesh>
 
-      {/* Hair - softer rounded style */}
+      {/* Hair - natural and straight */}
       {hairStyle === 'long' ? (
         <>
-          {/* Top of head - rounded */}
-          <mesh position={[0, 1.38, 0]}>
-            <sphereGeometry args={[0.18, 12, 12]} />
+          {/* Long hair - natural straight style */}
+          <mesh position={[0, 1.35, 0]}>
+            <boxGeometry args={[0.25, 0.15, 0.25]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Side hair - softer */}
-          <mesh position={[-0.15, 1.15, 0]}>
-            <sphereGeometry args={[0.12, 10, 10]} />
+          <mesh position={[0, 1.15, -0.02]}>
+            <boxGeometry args={[0.24, 0.35, 0.22]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          <mesh position={[0.15, 1.15, 0]}>
-            <sphereGeometry args={[0.12, 10, 10]} />
+          <mesh position={[-0.15, 1.0, 0]}>
+            <boxGeometry args={[0.08, 0.4, 0.2]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
-          {/* Lower side hair */}
-          <mesh position={[-0.15, 0.95, 0]}>
-            <sphereGeometry args={[0.1, 10, 10]} />
-            <meshStandardMaterial color="#654321" />
-          </mesh>
-          <mesh position={[0.15, 0.95, 0]}>
-            <sphereGeometry args={[0.1, 10, 10]} />
-            <meshStandardMaterial color="#654321" />
-          </mesh>
-          {/* Back hair - rounded */}
-          <mesh position={[0, 1.2, -0.15]}>
-            <sphereGeometry args={[0.15, 10, 10]} />
-            <meshStandardMaterial color="#654321" />
-          </mesh>
-          <mesh position={[0, 1.0, -0.15]}>
-            <sphereGeometry args={[0.13, 10, 10]} />
+          <mesh position={[0.15, 1.0, 0]}>
+            <boxGeometry args={[0.08, 0.4, 0.2]} />
             <meshStandardMaterial color="#654321" />
           </mesh>
         </>
       ) : (
         <>
-          {/* Top for short hair - rounded */}
-          <mesh position={[0, 1.38, 0]}>
-            <sphereGeometry args={[0.16, 12, 12]} />
-            <meshStandardMaterial color="#654321" />
+          {/* Short hair - natural cut */}
+          <mesh position={[0, 1.35, 0]}>
+            <boxGeometry args={[0.24, 0.18, 0.24]} />
+            <meshStandardMaterial color="#2c1810" />
           </mesh>
-          {/* Back short hair */}
-          <mesh position={[0, 1.28, -0.12]}>
-            <sphereGeometry args={[0.12, 10, 10]} />
-            <meshStandardMaterial color="#654321" />
+          <mesh position={[0, 1.25, 0.03]}>
+            <boxGeometry args={[0.22, 0.22, 0.2]} />
+            <meshStandardMaterial color="#2c1810" />
           </mesh>
         </>
       )}

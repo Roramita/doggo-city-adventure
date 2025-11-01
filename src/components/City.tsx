@@ -1,31 +1,31 @@
 import * as THREE from 'three';
 
-// Helper component for windows
-const Window = ({ position }: { position: [number, number, number] }) => (
-  <group position={position}>
-    <mesh>
-      <boxGeometry args={[0.8, 1.2, 0.1]} />
+// Helper component for windows with rotation support
+const Window = ({ position, rotation = [0, 0, 0] }: { position: [number, number, number], rotation?: [number, number, number] }) => (
+  <group position={position} rotation={rotation}>
+    <mesh position={[0, 0, 0.03]}>
+      <boxGeometry args={[0.8, 1.2, 0.06]} />
       <meshStandardMaterial color="#87ceeb" />
     </mesh>
-    <mesh position={[0, 0, 0.06]}>
+    <mesh position={[0, 0, 0.065]}>
       <boxGeometry args={[0.02, 1.2, 0.01]} />
       <meshStandardMaterial color="#333333" />
     </mesh>
-    <mesh position={[0, 0, 0.06]}>
+    <mesh position={[0, 0, 0.065]}>
       <boxGeometry args={[0.8, 0.02, 0.01]} />
       <meshStandardMaterial color="#333333" />
     </mesh>
   </group>
 );
 
-// Helper component for door
-const Door = ({ position }: { position: [number, number, number] }) => (
-  <group position={position}>
-    <mesh>
-      <boxGeometry args={[1, 2, 0.1]} />
+// Helper component for door with rotation support
+const Door = ({ position, rotation = [0, 0, 0] }: { position: [number, number, number], rotation?: [number, number, number] }) => (
+  <group position={position} rotation={rotation}>
+    <mesh position={[0, 0, 0.03]}>
+      <boxGeometry args={[1, 2, 0.06]} />
       <meshStandardMaterial color="#654321" />
     </mesh>
-    <mesh position={[0.3, 0, 0.06]}>
+    <mesh position={[0.3, 0, 0.065]}>
       <sphereGeometry args={[0.08, 16, 16]} />
       <meshStandardMaterial color="#ffd700" />
     </mesh>
@@ -120,90 +120,93 @@ export const City = () => {
         </mesh>
       ))}
 
-      {/* Manhole covers - flat on street only, fewer */}
-      {[[-2, 5], [1, -8]].map((pos, i) => (
+      {/* Manhole covers - flat on street only */}
+      {[[-1, 3], [2, -5]].map((pos, i) => (
         <mesh
           key={i}
           rotation={[-Math.PI / 2, 0, 0]}
-          position={[pos[0], 0.005, pos[1]]}
+          position={[pos[0], 0.002, pos[1]]}
           receiveShadow
         >
-          <circleGeometry args={[0.6, 16]} />
+          <circleGeometry args={[0.5, 16]} />
           <meshStandardMaterial color="#555555" />
         </mesh>
       ))}
 
       {/* Building 1 - Tall apartment building */}
-      <group position={[-12, 0, 0]}>
+      <group position={[-15, 0, -5]}>
         <mesh position={[0, 6, 0]} castShadow receiveShadow>
           <boxGeometry args={[5, 12, 5]} />
           <meshStandardMaterial color="#cccccc" />
         </mesh>
         {/* Door */}
-        <Door position={[0, 1, 2.55]} />
+        <Door position={[0, 1, 2.5]} />
         {/* Windows on all sides - multiple floors */}
         {Array.from({ length: 4 }).map((_, floor) => (
           <group key={floor}>
             {/* Front windows */}
-            <Window position={[-1.5, 3 + floor * 2.5, 2.55]} />
-            <Window position={[1.5, 3 + floor * 2.5, 2.55]} />
+            <Window position={[-1.5, 3 + floor * 2.5, 2.5]} />
+            <Window position={[1.5, 3 + floor * 2.5, 2.5]} />
             {/* Back windows */}
-            <Window position={[-1.5, 3 + floor * 2.5, -2.55]} />
-            <Window position={[1.5, 3 + floor * 2.5, -2.55]} />
+            <Window position={[-1.5, 3 + floor * 2.5, -2.5]} rotation={[0, Math.PI, 0]} />
+            <Window position={[1.5, 3 + floor * 2.5, -2.5]} rotation={[0, Math.PI, 0]} />
             {/* Left side windows */}
-            <Window position={[-2.55, 3 + floor * 2.5, -1]} />
-            <Window position={[-2.55, 3 + floor * 2.5, 1]} />
+            <Window position={[-2.5, 3 + floor * 2.5, -1]} rotation={[0, Math.PI / 2, 0]} />
+            <Window position={[-2.5, 3 + floor * 2.5, 1]} rotation={[0, Math.PI / 2, 0]} />
             {/* Right side windows */}
-            <Window position={[2.55, 3 + floor * 2.5, -1]} />
-            <Window position={[2.55, 3 + floor * 2.5, 1]} />
+            <Window position={[2.5, 3 + floor * 2.5, -1]} rotation={[0, -Math.PI / 2, 0]} />
+            <Window position={[2.5, 3 + floor * 2.5, 1]} rotation={[0, -Math.PI / 2, 0]} />
             {floor > 0 && <Balcony position={[0, 2.5 + floor * 2.5, 2]} />}
           </group>
         ))}
       </group>
 
       {/* Building 2 - Medium building */}
-      <group position={[12, 0, 8]}>
+      <group position={[15, 0, 10]}>
         <mesh position={[0, 4, 0]} castShadow receiveShadow>
           <boxGeometry args={[4, 8, 4]} />
           <meshStandardMaterial color="#bbbbbb" />
         </mesh>
-        <Door position={[0, 1, 2.05]} />
+        <Door position={[0, 1, 2]} />
         {Array.from({ length: 3 }).map((_, floor) => (
           <group key={floor}>
-            {/* All sides windows */}
-            <Window position={[-1, 2.5 + floor * 2.2, 2.05]} />
-            <Window position={[1, 2.5 + floor * 2.2, 2.05]} />
-            <Window position={[-1, 2.5 + floor * 2.2, -2.05]} />
-            <Window position={[1, 2.5 + floor * 2.2, -2.05]} />
-            <Window position={[-2.05, 2.5 + floor * 2.2, 0]} />
-            <Window position={[2.05, 2.5 + floor * 2.2, 0]} />
+            {/* Front windows */}
+            <Window position={[-1, 2.5 + floor * 2.2, 2]} />
+            <Window position={[1, 2.5 + floor * 2.2, 2]} />
+            {/* Back windows */}
+            <Window position={[-1, 2.5 + floor * 2.2, -2]} rotation={[0, Math.PI, 0]} />
+            <Window position={[1, 2.5 + floor * 2.2, -2]} rotation={[0, Math.PI, 0]} />
+            {/* Side windows */}
+            <Window position={[-2, 2.5 + floor * 2.2, 0]} rotation={[0, Math.PI / 2, 0]} />
+            <Window position={[2, 2.5 + floor * 2.2, 0]} rotation={[0, -Math.PI / 2, 0]} />
             {floor > 0 && <Balcony position={[0, 2 + floor * 2.2, 1.5]} />}
           </group>
         ))}
       </group>
 
       {/* Building 3 - Very tall building */}
-      <group position={[-12, 0, 12]}>
+      <group position={[-15, 0, 15]}>
         <mesh position={[0, 8, 0]} castShadow receiveShadow>
           <boxGeometry args={[6, 16, 6]} />
           <meshStandardMaterial color="#aaaaaa" />
         </mesh>
-        <Door position={[0, 1, 3.05]} />
+        <Door position={[0, 1, 3]} />
         {Array.from({ length: 6 }).map((_, floor) => (
           <group key={floor}>
             {/* Front windows */}
-            <Window position={[-2, 3 + floor * 2.3, 3.05]} />
-            <Window position={[0, 3 + floor * 2.3, 3.05]} />
-            <Window position={[2, 3 + floor * 2.3, 3.05]} />
+            <Window position={[-2, 3 + floor * 2.3, 3]} />
+            <Window position={[0, 3 + floor * 2.3, 3]} />
+            <Window position={[2, 3 + floor * 2.3, 3]} />
             {/* Back windows */}
-            <Window position={[-2, 3 + floor * 2.3, -3.05]} />
-            <Window position={[0, 3 + floor * 2.3, -3.05]} />
-            <Window position={[2, 3 + floor * 2.3, -3.05]} />
-            {/* Side windows */}
-            <Window position={[-3.05, 3 + floor * 2.3, -1.5]} />
-            <Window position={[-3.05, 3 + floor * 2.3, 1.5]} />
-            <Window position={[3.05, 3 + floor * 2.3, -1.5]} />
-            <Window position={[3.05, 3 + floor * 2.3, 1.5]} />
+            <Window position={[-2, 3 + floor * 2.3, -3]} rotation={[0, Math.PI, 0]} />
+            <Window position={[0, 3 + floor * 2.3, -3]} rotation={[0, Math.PI, 0]} />
+            <Window position={[2, 3 + floor * 2.3, -3]} rotation={[0, Math.PI, 0]} />
+            {/* Left side windows */}
+            <Window position={[-3, 3 + floor * 2.3, -1.5]} rotation={[0, Math.PI / 2, 0]} />
+            <Window position={[-3, 3 + floor * 2.3, 1.5]} rotation={[0, Math.PI / 2, 0]} />
+            {/* Right side windows */}
+            <Window position={[3, 3 + floor * 2.3, -1.5]} rotation={[0, -Math.PI / 2, 0]} />
+            <Window position={[3, 3 + floor * 2.3, 1.5]} rotation={[0, -Math.PI / 2, 0]} />
             {floor > 0 && floor % 2 === 0 && <Balcony position={[0, 2.5 + floor * 2.3, 2.5]} />}
           </group>
         ))}
@@ -290,11 +293,11 @@ export const City = () => {
         <meshStandardMaterial color="#66aa66" />
       </mesh>
 
-      {/* More trees - expanded */}
+      {/* More trees - properly positioned */}
       {[
-        [12, -8], [18, -12], [15, -7], [19, -10], [13, -13], [17, -8],
-        [-15, -8], [-18, -5], [-20, 10], [-22, 5], [20, 8], [22, 12],
-        [-8, 18], [8, 20], [10, 22], [-10, 20]
+        [12, -15], [18, -18], [20, -12],
+        [-22, -10], [-20, -15], [-24, -8],
+        [-22, 18], [-24, 20], [20, 18], [22, 20], [24, 15]
       ].map((pos, i) => (
         <group key={i} position={[pos[0], 0, pos[1]]}>
           <mesh position={[0, 1.2, 0]} castShadow>
@@ -342,38 +345,42 @@ export const City = () => {
         </mesh>
       </group>
 
-      {/* School - large building */}
-      <group position={[-18, 0, -8]}>
+      {/* School - large building, sideways to street */}
+      <group position={[-8, 0, -12]} rotation={[0, Math.PI / 2, 0]}>
         <mesh position={[0, 3, 0]} castShadow receiveShadow>
           <boxGeometry args={[12, 6, 8]} />
           <meshStandardMaterial color="#ffd700" />
         </mesh>
-        <Door position={[0, 1, 4.05]} />
+        <Door position={[0, 1, 4]} />
+        {/* School text above door */}
+        <mesh position={[0, 3.5, 4.05]} castShadow>
+          <boxGeometry args={[4, 0.8, 0.05]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
         {/* School windows */}
         {Array.from({ length: 2 }).map((_, floor) => (
           <group key={floor}>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Window key={i} position={[-4.5 + i * 2.25, 1.5 + floor * 2.5, 4.05]} />
+              <Window key={i} position={[-4.5 + i * 2.25, 1.5 + floor * 2.5, 4]} />
+            ))}
+            {/* Side windows */}
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Window key={`side-${i}`} position={[-6, 1.5 + floor * 2.5, -3 + i * 3]} rotation={[0, Math.PI / 2, 0]} />
             ))}
           </group>
         ))}
-        {/* School sign */}
-        <mesh position={[0, 5, 4.1]} castShadow>
-          <boxGeometry args={[3, 0.8, 0.1]} />
-          <meshStandardMaterial color="#ffffff" />
-        </mesh>
       </group>
 
 
       {/* Café */}
-      <group position={[15, 0, -5]}>
+      <group position={[18, 0, -8]}>
         <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
           <boxGeometry args={[4, 3, 3]} />
           <meshStandardMaterial color="#d2691e" />
         </mesh>
-        <Window position={[-1, 1.5, 1.55]} />
-        <Window position={[1, 1.5, 1.55]} />
-        <Door position={[0, 1, 1.55]} />
+        <Window position={[-1, 1.5, 1.5]} />
+        <Window position={[1, 1.5, 1.5]} />
+        <Door position={[0, 1, 1.5]} />
         
         {/* Café tables and chairs outside */}
         {[[-1.5, 2.5], [1.5, 2.5], [0, 3.5]].map((pos, i) => (
@@ -405,18 +412,21 @@ export const City = () => {
       </group>
 
       {/* Shopping center */}
-      <group position={[18, 0, -12]}>
+      <group position={[18, 0, -18]}>
         <mesh position={[0, 2.5, 0]} castShadow receiveShadow>
           <boxGeometry args={[8, 5, 6]} />
           <meshStandardMaterial color="#87ceeb" />
         </mesh>
-        <Door position={[0, 1, 3.05]} />
+        <Door position={[0, 1, 3]} />
         {/* Large shopping windows */}
-        <Window position={[-2.5, 2, 3.05]} />
-        <Window position={[2.5, 2, 3.05]} />
+        <Window position={[-2.5, 2, 3]} />
+        <Window position={[2.5, 2, 3]} />
+        {/* Side windows */}
+        <Window position={[-4, 2, 0]} rotation={[0, Math.PI / 2, 0]} />
+        <Window position={[4, 2, 0]} rotation={[0, -Math.PI / 2, 0]} />
         {/* Sign */}
-        <mesh position={[0, 4.5, 3.1]} castShadow>
-          <boxGeometry args={[4, 0.6, 0.1]} />
+        <mesh position={[0, 4.5, 3.05]} castShadow>
+          <boxGeometry args={[4, 0.6, 0.05]} />
           <meshStandardMaterial color="#ff6600" />
         </mesh>
       </group>
